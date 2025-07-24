@@ -1,0 +1,88 @@
+DROP DATABASE IF EXISTS Testing_System_Db;
+CREATE DATABASE Testing_System_Db;
+USE Testing_System_Db;
+
+DROP TABLE IF EXISTS Department;
+CREATE TABLE Department(
+	DepartmentID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    DepartmentName 			NVARCHAR(30) NOT NULL
+);
+
+DROP TABLE IF EXISTS `Position`;
+CREATE TABLE `Position`(
+	PositionID 				TINYINT AUTO_INCREMENT PRIMARY KEY,
+    PositionName 			NVARCHAR(30) NOT NULL
+);
+
+DROP TABLE IF EXISTS `Account`;
+CREATE TABLE `Account`(
+	AccountID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    Email 				NVARCHAR(50) NOT NULL,
+    Username 			NVARCHAR(30) NOT NULL,
+    FullName 			NVARCHAR(30) NOT NULL,
+    DepartmentID 		TINYINT NOT NULL,
+    PositionID 			TINYINT NOT NULL,
+    CreateDate 			DATETIME DEFAULT NOW()
+);
+
+DROP TABLE IF EXISTS `Group`;
+CREATE TABLE `Group`(
+	GroupID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    GroupName 			NVARCHAR(30) NOT NULL,
+    CreatorID 			TINYINT NOT NULL,
+    CreateDate 			DATETIME DEFAULT NOW()
+);
+
+DROP TABLE IF EXISTS GroupAccount;
+CREATE TABLE GroupAccount(
+	GroupID 			TINYINT NOT NULL,
+    AccountID 			TINYINT NOT NULL,
+    JoinDate 			DATETIME DEFAULT NOW()
+);
+
+DROP TABLE IF EXISTS TypeQuestion;
+CREATE TABLE TypeQuestion(
+	TypeID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    TypeName 			NVARCHAR(10) NOT NULL
+);
+
+DROP TABLE IF EXISTS CategoryQuestion;
+CREATE TABLE CategoryQuestion(
+	CategoryID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    CategoryName 		NVARCHAR(30) NOT NULL
+);
+
+DROP TABLE IF EXISTS Question;
+CREATE TABLE Question(
+	QuestionID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    Content 			NVARCHAR(300) NOT NULL,
+    CategoryID 			TINYINT NOT NULL,
+    TypeID 				TINYINT NOT NULL,
+    CreatorID 			TINYINT NOT NULL,
+    CreateDate 			DATETIME DEFAULT NOW()
+);
+
+DROP TABLE IF EXISTS Answer;
+CREATE TABLE Answer(
+	AnswerID 			TINYINT AUTO_INCREMENT PRIMARY KEY,
+    Content 			NVARCHAR(300) NOT NULL,
+    QuestionID 			TINYINT NOT NULL,
+    isCorrect 			BIT DEFAULT 1
+);
+
+DROP TABLE IF EXISTS Exam;
+CREATE TABLE Exam(
+	ExamID 				TINYINT AUTO_INCREMENT PRIMARY KEY,
+    `Code` 				CHAR(10) NOT NULL,
+    Title 				NVARCHAR(20) NOT NULL,
+    CategoryID 			TINYINT NOT NULL,
+    Duration 			TINYINT NOT NULL,
+    CreatorID 			TINYINT NOT NULL,
+    CreateDate 			DATETIME DEFAULT NOW()
+);
+
+DROP TABLE IF EXISTS ExamQuestion;
+CREATE TABLE ExamQuestion(
+	ExamID 				TINYINT NOT NULL,
+    QuestionID 			TINYINT NOT NULL
+);
